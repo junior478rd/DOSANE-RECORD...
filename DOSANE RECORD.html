@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Discográfica - Repertorio</title>
+  <link rel="stylesheet" href="DOSANE RECORD estilo.css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Menú de navegación -->
+  <nav class="menu">
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#canciones">Canciones</a></li>
+      <li><a href="#artistas">Artistas</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <!-- Sección de Inicio -->
+  <div id="inicio" class="encabezado-led">
+    <div class="logo-container">
+      <img src="Logo/Logo.png" alt="Logo DOSANE RECORD" class="logo">
+    </div>
+    <h1>DOSANE RECORD</h1>
+  </div>
+
+  <!-- Sección de Canciones -->
+  <div id="canciones">
+    <h2 style="text-align:center; color:#131212; margin-top:60px;">Canciones</h2>
+
+    <div class="cancion">
+      <h2>DEJAME ABRAZARTE SAMMY X DJ DOMINICAN Ft NERY</h2>
+      <img src="Caratula/DEJAME ABRAZARTE .jpg" alt="Carátula" width="300">
+      <audio class="audio-player">
+        <source src="DJ DOMINICAN X SAMMY/DEJAME ABRAZARTE SAMMY X DJ DOMINICAN Ft NERY.mp3" type="audio/mpeg">
+      </audio>
+      <div class="custom-player">
+        <button class="play-btn">▶️</button>
+        <input type="range" class="seek-bar" value="0" max="100">
+        <span class="time">00:00</span>
+      </div>
+    </div>
+
+    <div class="cancion">
+      <h2>DJ DOMINICAN X SAMMY - BAILA LUNA</h2>
+      <img src="Caratula/Baila luna .jpg" alt="Carátula" width="300">
+      <audio class="audio-player">
+        <source src="DJ DOMINICAN X SAMMY/Sammy ft DJ DOMINICAN Baila LUNA.mp3" type="audio/mpeg">
+      </audio>
+      <div class="custom-player">
+        <button class="play-btn">▶️</button>
+        <input type="range" class="seek-bar" value="0" max="100">
+        <span class="time">00:00</span>
+      </div>
+    </div>
+
+    <div class="cancion">
+      <h2>UN VERANO MÁS SAMMY X DJ DOMINICAN</h2>
+      <img src="Caratula/Un Verano Mas.png" alt="Carátula" width="300">
+      <audio class="audio-player">
+        <source src="DJ DOMINICAN X SAMMY/UN VERANO MAS.mp3" type="audio/mpeg">
+      </audio>
+      <div class="custom-player">
+        <button class="play-btn">▶️</button>
+        <input type="range" class="seek-bar" value="0" max="100">
+        <span class="time">00:00</span>
+      </div>
+    </div>
+
+    <div class="cancion">
+      <h2>TU MADRE TE AMA - SAMMY X DJ DOMINICAN</h2>
+      <img src="Caratula/Tu Madre Te ama.png" alt="Carátula" width="300">
+      <audio class="audio-player">
+        <source src="DJ DOMINICAN X SAMMY/DJ DOMINICAN X SAMMY TU MADRE TE AMA.mp3" type="audio/mpeg">
+      </audio>
+      <div class="custom-player">
+        <button class="play-btn">▶️</button>
+        <input type="range" class="seek-bar" value="0" max="100">
+        <span class="time">00:00</span>
+      </div>
+    </div>
+
+  </div> <!-- Fin de #canciones -->
+
+  <!-- Sección de Artistas -->
+  <div id="artistas" class="artistas-seccion">
+    <h2 style="text-align:center; color:#000000; margin-top:60px;">Nuestros Artistas</h2>
+
+    <div class="artista">
+      <img src="Foto de biografia/Sammy.jpg" alt="Sammy" class="foto-artista">
+      <h3>Sammy</h3>
+      <p>Sammy es un artista urbano con una carrera en ascenso, conocido por su estilo versátil y colaboraciones con DJ Dominican.</p>
+    </div>
+
+    <div class="artista">
+      <img src="Foto de biografia/DJ DOMINICAN.jpg" alt="DJ Dominican" class="foto-artista">
+      <h3>DJ Dominican</h3>
+      <p>Productor musical. Sus beats únicos dan vida a los éxitos más recientes del sello. Fundador de DOSANE RECORD junto a Sammy.</p>
+    </div>
+
+    
+
+  <!-- Sección de Contacto -->
+  <div id="contacto">
+    <h2 style="text-align:center; color:#000000; margin-top:60px;">Contacto</h2>
+    <p style="text-align:center; color:#000000;">Escríbenos a: djdominican9@gmail.com</p>
+  </div>
+
+  <!-- Script del reproductor -->
+  <script>
+    document.querySelectorAll('.cancion').forEach(cancion => {
+      const audio = cancion.querySelector('.audio-player');
+      const playBtn = cancion.querySelector('.play-btn');
+      const seekBar = cancion.querySelector('.seek-bar');
+      const time = cancion.querySelector('.time');
+
+      if (audio && playBtn && seekBar && time) {
+        let playing = false;
+
+        playBtn.addEventListener('click', () => {
+          if (playing) {
+            audio.pause();
+            playBtn.textContent = '▶️';
+          } else {
+            // Pausar los demás audios
+            document.querySelectorAll('.audio-player').forEach(a => {
+              if (a !== audio) {
+                a.pause();
+                a.closest('.cancion').querySelector('.play-btn').textContent = '▶️';
+              }
+            });
+
+            audio.play();
+            playBtn.textContent = '⏸️';
+          }
+          playing = !playing;
+        });
+
+        audio.addEventListener('timeupdate', () => {
+          const current = audio.currentTime;
+          const duration = audio.duration;
+          if (!isNaN(duration)) {
+            seekBar.value = (current / duration) * 100;
+            const minutes = Math.floor(current / 60).toString().padStart(2, '0');
+            const seconds = Math.floor(current % 60).toString().padStart(2, '0');
+            time.textContent = `${minutes}:${seconds}`;
+          }
+        });
+
+        seekBar.addEventListener('input', () => {
+          if (!isNaN(audio.duration)) {
+            audio.currentTime = (seekBar.value / 100) * audio.duration;
+          }
+        });
+      }
+    });
+  </script>
+
+  <!-- Script de menú activo -->
+  <script>
+    const enlaces = document.querySelectorAll('.menu a');
+    const secciones = document.querySelectorAll('div[id]');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      secciones.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 80) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      enlaces.forEach(link => {
+        link.classList.remove('activo');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('activo');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
